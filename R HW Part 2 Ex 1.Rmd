@@ -1,21 +1,19 @@
 ---
 title: 'STA 380, Part 2: Exercises 1'
-author: "Ishita"
+author: "Ishita Aishwarya Antia Jianing"
 date: "August 8, 2017"
-output:
-  word_document: default
-  pdf_document: default
+output: rmarkdown::github_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-![Probability Ques 1](C:\Users\Ishita\Downloads\r probability_4.jpg)
+![Probability Ques 1](https://github.com/iishita211/STA-380-Part-2-Exercise-1/blob/master/r%20probability_4.jpg)
 
-![Probability Ques 2](C:\Users\Ishita\Downloads\r probability_2.jpg)
+![Probability Ques 2](https://github.com/iishita211/STA-380-Part-2-Exercise-1/blob/master/r%20probability_3.jpg)
 
-![Probability Ques 2 cont.](C:\Users\Ishita\Downloads\r probability_3.jpg)
+![Probability Ques 2 cont.](https://github.com/iishita211/STA-380-Part-2-Exercise-1/blob/master/r%20probability_3.jpg)
 
 ### Exploratory analysis : green buildings
 
@@ -65,15 +63,41 @@ From the linear regression in step 1, we see that rent for class a and class b i
 
 From the analysis of the conclusion by stats guru in step 1, we concluded that the method was incorrect due to uneven distribution of green and non-green buildings accross different parameters. Hence, we dedided that we needed to compare green and non-green buildings having similar properties.
 
-To dervie our similar non-green buildings set, we took the following assumptions:
+In order to make non-green buildings dataset representative of the prpoperties of green buildings dataset, we  first identified the importanat parameters affecting rent, such as size, class, net, amenities, stories, etc. We made an educated assumption of the size to be in the 25th-75th percentile. Through our previous analysis, we observed that the majority of the green buildings has amenities =1 , class= A and net =0. For stories, since we were given that the new building is going to be 15 stories high, we selected a range of 10-20 storied buildings in the data set for both, green and non-green buildings.Our calculations showed that the median rent for non-green buildings is higher, at $34.2 /sqft while the green building has a lower rent at $29/sqft. Also, we checked if the dataset for non-green buildings was more densly populated in the high rent clusters. From the plots below, we can see that the distribution is not non-uniform. Hence, it is not the distribution in this case which is resulting in higher rent for non-green buildings.
 
-
+From this, we can conclude that if this is a class A, high quality green building with several amenities, it is better to build a non-green building as the returns are higher, from a business persepctive. FRom an ethical perspective, one can argue otherwise.
 
 
 
 ```{r}
-buildings_green = subset(greenbuildings, greenbuildings$green_rating==1, select = - c(greenbuildings$green_rating))
-buildings_non_green = subset(greenbuildings, greenbuildings$green_rating==0 ,select =-c(greenbuildings$green_rating))
+library(dplyr)
+buildings_green = subset(greenbuildings, green_rating==1, select = -c(green_rating))
+buildings_non_green = subset(greenbuildings, green_rating==0 ,select = -c(green_rating))
+
+quantile(buildings_green$size,0.25)
+quantile(buildings_green$size,0.75)
+
+#Making subset of non green buildings to compare with green buildings
+greenbuildings_comp = buildings_non_green %>% filter(size>120000 & size<417446,
+                                                     stories>10 & stories<20,
+                                                     amenities==1,
+                                                     class_a==1,
+                                                     class_b==0,
+                                                     net==0)
+
+greenbuildings_comp_green = buildings_green %>% filter(stories>10 & stories<20)
+                                                  
+#Getting median rent for green and non-green buildings
+rent_green = median(greenbuildings_comp_green$Rent) #29
+rent_nongreen = median(greenbuildings_comp$Rent) #34.2
+rent_green
+rent_nongreen
+
+par(mfrow=c(1,2))
+
+qplot(greenbuildings_comp$cluster_rent, greenbuildings_comp$Rent,xlab='Cluster Rent',ylab='Rent', main='Cluster Rent vs Rent: Non green')
+
+qplot(greenbuildings_comp_green$cluster_rent, greenbuildings_comp_green$Rent,,xlab='Cluster Rent',ylab='Rent', main='Cluster Rent vs Rent:Green')
 ```
 
 ### Bootstrapping
@@ -334,7 +358,6 @@ library(ggplot2)
 library(dplyr)
 library(LICORS)
 library(reshape2)
-setwd("C:\\Users\\Ani\\Documents\\R\\RStudio\\class scripts")
 Social_Market=read.csv("social_marketing.csv")
 #head(Social_Market)
 Social_Market2=Social_Market[, -cbind(1,2,6)]
