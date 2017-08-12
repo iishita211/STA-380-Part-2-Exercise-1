@@ -1,6 +1,6 @@
 STA 380, Part 2: Exercises 1
 ================
-Ishita Aishwarya Antia Jianing
+Bhat Cui Ishita Srikanth
 August 8, 2017
 
 ![Probability Ques 1](https://github.com/iishita211/STA-380-Part-2-Exercise-1/blob/master/r%20probability_4.jpg)
@@ -19,7 +19,7 @@ greenbuildings = read.csv('greenbuildings.csv')
 qplot(greenbuildings$age, greenbuildings$Rent, col=greenbuildings$green_rating,xlab='Age',ylab='Rent', main='Age vs Rent')
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-1-1.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-1-1.png)
 
 ``` r
 lm_green = lm(Rent~., data = greenbuildings)
@@ -102,7 +102,7 @@ From the above plot, we can see that most of the green-buldings are relatively n
 qplot(greenbuildings$cluster_rent, greenbuildings$Rent, col=greenbuildings$green_rating,xlab='Cluster Rent',ylab='Rent', main='Cluster Rent vs Rent')
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-1.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-1.png)
 
 We know that for each cluster, there is one cluster rent defined, and we have one green building in each cluster. Now from the above plot, we can see that there are more non-green buildings in the lower rent clusters than the higher rent clusters. Hence the median rent for non-green will be more inclined towards lower rent always in this case, and the median for green will be higher. This also proves that taking an overall median is not a good strategy in this problem statment.
 
@@ -115,7 +115,7 @@ x <- barplot(count, col=c("yellow", "darkgreen"),
     ylab="Number of buildings", xlab="Amenities")
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-3-1.png) We plotted the density of green and non-green buildings vs amenities, and we see that non-green buildings are distributed almost equally across amenities and non-amenities. However, there are more green buildings with amenities than without. Hence, median of green buildings will be probably be inclined towards higher rent( as buildings with amenities have higher rent, as seen in the regression coefficient and p values for amenities ).Thus, median would not be a right method to compare the rent of green and non-green buildings.
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-3-1.png) We plotted the density of green and non-green buildings vs amenities, and we see that non-green buildings are distributed almost equally across amenities and non-amenities. However, there are more green buildings with amenities than without. Hence, median of green buildings will be probably be inclined towards higher rent( as buildings with amenities have higher rent, as seen in the regression coefficient and p values for amenities ).Thus, median would not be a right method to compare the rent of green and non-green buildings.
 
 ``` r
 greenbuildings$Class=ifelse(greenbuildings$class_a==1,'a',ifelse(greenbuildings$class_b==1,'b','c'))
@@ -127,7 +127,7 @@ x <- barplot(count2, col=c("yellow", "darkgreen"),
     ylab="Number of buildings", xlab="Class")
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-4-1.png) From the above plot, we see that we have most of the green buildings in class a, unlike non green buildings. From the linear regression in step 1, we see that rent for class a and class b is higher than rent for class c ( postive coefficient, very low p value and 95% confidence interval not containing 0). Here again, we prove that median is not the right way to calculate the differnce of rent between green and non green buildings.
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-4-1.png) From the above plot, we see that we have most of the green buildings in class a, unlike non green buildings. From the linear regression in step 1, we see that rent for class a and class b is higher than rent for class c ( postive coefficient, very low p value and 95% confidence interval not containing 0). Here again, we prove that median is not the right way to calculate the differnce of rent between green and non green buildings.
 
 \*\*\* Step 2 : Improving the green building analysis \*\*\*
 
@@ -200,7 +200,7 @@ par(mfrow=c(1,2))
 qplot(greenbuildings_comp$cluster_rent, greenbuildings_comp$Rent,xlab='Cluster Rent',ylab='Rent', main='Cluster Rent vs Rent: Non green')
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-5-1.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-5-1.png)
 
 ``` r
 qplot(greenbuildings_comp_green$cluster_rent, greenbuildings_comp_green$Rent,,xlab='Cluster Rent',ylab='Rent', main='Cluster Rent vs Rent:Green')
@@ -208,7 +208,7 @@ qplot(greenbuildings_comp_green$cluster_rent, greenbuildings_comp_green$Rent,,xl
 
     ## Warning: Ignoring unknown parameters: NA
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-5-2.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-5-2.png)
 
 ### Bootstrapping
 
@@ -321,31 +321,31 @@ Q1 step1. Look at close-to-close changes plots
 plot(all_returns[,1],type='l',main='SPY', xlab='01/02/2007 to 08/07/2017', ylab = 'returns' ) 
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png)
 
 ``` r
 plot(all_returns[,2],type='l',main='TLT', xlab='01/02/2007 to 08/07/2017', ylab = 'returns' ) 
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-2.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-2.png)
 
 ``` r
 plot(all_returns[,3],type='l',main='LQD', xlab='01/02/2007 to 08/07/2017', ylab = 'returns' ) 
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-3.png) SPY, the stock market risk in general. TLT, more stable than stock market index. LQD, the safest choice so far.
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-3.png) SPY, the stock market risk in general. TLT, more stable than stock market index. LQD, the safest choice so far.
 
 ``` r
 plot(all_returns[,4],type='l',main='EEM', xlab='01/02/2007 to 08/07/2017', ylab = 'returns' ) 
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-1.png)
 
 ``` r
 plot(all_returns[,5],type='l',main='VNQ', xlab='01/02/2007 to 08/07/2017', ylab = 'returns' ) 
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-2.png) EEM, looks pretty stable but there are strange outliers that has magnified the scale of y. So we'd better look at it from 2009 to get a clearer idea. VNQ, also looks fluctuant. So again we need to change the scale of y.
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-8-2.png) EEM, looks pretty stable but there are strange outliers that has magnified the scale of y. So we'd better look at it from 2009 to get a clearer idea. VNQ, also looks fluctuant. So again we need to change the scale of y.
 
 ``` r
 mystocks_2009 = c("EEM","VNQ")
@@ -355,13 +355,13 @@ VNQ_2009a = adjustOHLC(VNQ)
 plot(ClCl(EEM_2009a)) 
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-9-1.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-9-1.png)
 
 ``` r
 plot(ClCl(VNQ_2009a)) 
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-9-2.png) As we can see from the new plot, EEM and VNQ are more volatile than SPY (EEM&gt; VNQ).
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-9-2.png) As we can see from the new plot, EEM and VNQ are more volatile than SPY (EEM&gt; VNQ).
 
 Then we got a rough risk ranking of these ETFs: EEM&gt; VNQ&gt; SPY&gt; TLT&gt; LQD. After learning about these ETFs, our intuition told us this ranking made perfect sense.
 
@@ -391,7 +391,7 @@ Q1 step3. Look at the correlations and autocorrelations
 pairs(all_returns)
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-1.png) These returns can be viewed as draws from the joint distribution
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-11-1.png) These returns can be viewed as draws from the joint distribution
 
 ``` r
 cor(all_returns)
@@ -448,32 +448,32 @@ sim1 = foreach(i=1:5000, .combine='rbind') %do% {
 hist(sim1[,n_days], 100,main='Frequency of total_wealth : Portfolio 1',xlab='total_wealth')
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-14-1.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-14-1.png)
 
 ``` r
 hist(sim1[,n_days]- initial_wealth, breaks=100, main='Frequency of profit/loss : Portfolio 1', xlab = 'profit/loss')
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-14-2.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-14-2.png)
 
 ``` r
 mean(sim1[,n_days]) 
 ```
 
-    ## [1] 101029.8
+    ## [1] 100962.2
 
 ``` r
 var(sim1[,n_days])
 ```
 
-    ## [1] 30841947
+    ## [1] 30598516
 
 ``` r
 quantile(sim1[,n_days], 0.05) - initial_wealth
 ```
 
-    ##      5% 
-    ## -6361.5
+    ##        5% 
+    ## -6342.018
 
 According to the simulation, the 4-week 5% value at risk is about -$6600.
 
@@ -503,25 +503,25 @@ sim2 = foreach(i=1:5000, .combine='rbind') %do% {
 hist(sim2[,n_days], 100,main='Frequency of total_wealth : Portfolio 2',xlab='total_wealth')
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-19-1.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-19-1.png)
 
 ``` r
 hist(sim2[,n_days]- initial_wealth, breaks=100, main='Frequency of profit/loss : Portfolio 2', xlab = 'profit/loss')
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-19-2.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-19-2.png)
 
 ``` r
 mean(sim2[,n_days]) 
 ```
 
-    ## [1] 100610.6
+    ## [1] 100602.2
 
 ``` r
 var(sim2[,n_days])
 ```
 
-    ## [1] 4899764
+    ## [1] 4688180
 
 The variance is far smaller than that of portfolio 1
 
@@ -531,7 +531,7 @@ quantile(sim2[,n_days], 0.05) - initial_wealth
 ```
 
     ##        5% 
-    ## -2876.725
+    ## -2854.741
 
 According to the simulation, the 4-week 5% value at risk is about -$-3100 (much better than the even split)
 
@@ -563,32 +563,32 @@ sim3 = foreach(i=1:5000, .combine='rbind') %do% {
 hist(sim3[,n_days], 100,main='Frequency of total_wealth : Portfolio 3',xlab='total_wealth')
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-24-1.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-24-1.png)
 
 ``` r
 hist(sim3[,n_days]- initial_wealth, breaks=100, main='Frequency of profit/loss : Portfolio 3', xlab = 'profit/loss')
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-24-2.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-24-2.png)
 
 ``` r
 mean(sim3[,n_days]) 
 ```
 
-    ## [1] 101635.5
+    ## [1] 102020.7
 
 ``` r
 var(sim3[,n_days])
 ```
 
-    ## [1] 239523754
+    ## [1] 267707488
 
 ``` r
 quantile(sim3[,n_days], 0.05) - initial_wealth
 ```
 
     ##        5% 
-    ## -13465.42
+    ## -13004.39
 
 According to our simulation, the 4-week value at risk is about -$12900, which shows far more risk than the above portfolios.
 
@@ -603,32 +603,32 @@ means<-c(mean(sim1[,n_days]) , mean(sim2[,n_days]),mean(sim3[,n_days]))
 means
 ```
 
-    ## [1] 101029.8 100610.6 101635.5
+    ## [1] 100962.2 100602.2 102020.7
 
 ``` r
 vars<-c(var(sim1[,n_days]),var(sim2[,n_days]),var(sim3[,n_days]))
 vars
 ```
 
-    ## [1]  30841947   4899764 239523754
+    ## [1]  30598516   4688180 267707488
 
 ``` r
 hist(sim1[,n_days]- initial_wealth, breaks=100, main='Frequency of profit/loss : Portfolio 1', xlab = 'profit/loss')
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-30-1.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-30-1.png)
 
 ``` r
 hist(sim2[,n_days]- initial_wealth, breaks=100, main='Frequency of profit/loss : Portfolio 2', xlab = 'profit/loss')
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-30-2.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-30-2.png)
 
 ``` r
 hist(sim3[,n_days]- initial_wealth, breaks=100, main='Frequency of profit/loss : Portfolio 3', xlab = 'profit/loss')
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-30-3.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-30-3.png)
 
 ``` r
 VaR_sim1=quantile(sim1[,n_days], 0.05) - initial_wealth
@@ -639,7 +639,7 @@ VaRs
 ```
 
     ##         5%         5%         5% 
-    ##  -6361.500  -2876.725 -13465.416
+    ##  -6342.018  -2854.741 -13004.391
 
 -   Suggestions for investment
 
@@ -713,7 +713,7 @@ ggplot(interest_sum,aes(x=variable,y=sum)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-32-1.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-32-1.png)
 
 In the barplot above, what stands out the most chatter. However, chatter comprises of a lot of different topics and hence cannot be correctly used to determine interests. More relevant topics like health\_nutrition, cooking,photo\_sharing also have high occurance rate. Thus, these groups were looked at in greater detail in order to find other similarities among them.
 
@@ -750,7 +750,7 @@ hier_sm_t = hclust(SM_scaled_dist, method='average')
 plot(hier_sm_t, cex=0.8)
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-1.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-1.png)
 
 ``` r
 ## Kmeans method to find interesting associations within groups
@@ -766,7 +766,7 @@ plot(1:k.max, wss,
      ylab="Total within-clusters sum of squares")
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-2.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-2.png)
 
 ``` r
 #make K clusters
@@ -775,23 +775,23 @@ cluster_all$center[1,]
 ```
 
     ##   current_events           travel    photo_sharing          tv_film 
-    ##     -0.064596032     -0.213018719     -0.151425757     -0.049035274 
+    ##      0.019638206     -0.153589376      0.002291646     -0.049831814 
     ##    sports_fandom         politics             food           family 
-    ##     -0.287572776     -0.255730671     -0.353961101     -0.257261744 
+    ##     -0.196806571     -0.176309500      0.415359828     -0.069501886 
     ##  home_and_garden            music             news    online_gaming 
-    ##     -0.111185018     -0.124043005     -0.243249375     -0.233404079 
+    ##      0.169663015      0.051469402     -0.049110034     -0.130862135 
     ##         shopping health_nutrition      college_uni   sports_playing 
-    ##     -0.061161953     -0.327090480     -0.228191739     -0.230135009 
+    ##      0.052766362      2.093713116     -0.207522028     -0.025632200 
     ##          cooking              eco        computers         business 
-    ##     -0.334275122     -0.159861312     -0.233029570     -0.124109370 
+    ##      0.371432702      0.532759430     -0.075368701      0.071056625 
     ##         outdoors           crafts       automotive              art 
-    ##     -0.314124678     -0.186919505     -0.182075498     -0.060642380 
+    ##      1.615660280      0.094193809     -0.121654546      0.011485213 
     ##         religion           beauty        parenting           dating 
-    ##     -0.297554552     -0.267519126     -0.304886088     -0.091888934 
+    ##     -0.174364062     -0.209977167     -0.100264020      0.181788655 
     ##           school personal_fitness          fashion   small_business 
-    ##     -0.244818727     -0.333542495     -0.262883446     -0.095327811 
+    ##     -0.143401555      2.070945307     -0.108249268     -0.065515075 
     ##             spam            adult 
-    ##      0.004585328      0.010405002
+    ##      0.003346418     -0.001584891
 
 ``` r
 cluster_all$center[2,]
@@ -821,23 +821,23 @@ cluster_all$center[3,]
 ```
 
     ##   current_events           travel    photo_sharing          tv_film 
-    ##      0.019638206     -0.153589376      0.002291646     -0.049831814 
+    ##     -0.064596032     -0.213018719     -0.151425757     -0.049035274 
     ##    sports_fandom         politics             food           family 
-    ##     -0.196806571     -0.176309500      0.415359828     -0.069501886 
+    ##     -0.287572776     -0.255730671     -0.353961101     -0.257261744 
     ##  home_and_garden            music             news    online_gaming 
-    ##      0.169663015      0.051469402     -0.049110034     -0.130862135 
+    ##     -0.111185018     -0.124043005     -0.243249375     -0.233404079 
     ##         shopping health_nutrition      college_uni   sports_playing 
-    ##      0.052766362      2.093713116     -0.207522028     -0.025632200 
+    ##     -0.061161953     -0.327090480     -0.228191739     -0.230135009 
     ##          cooking              eco        computers         business 
-    ##      0.371432702      0.532759430     -0.075368701      0.071056625 
+    ##     -0.334275122     -0.159861312     -0.233029570     -0.124109370 
     ##         outdoors           crafts       automotive              art 
-    ##      1.615660280      0.094193809     -0.121654546      0.011485213 
+    ##     -0.314124678     -0.186919505     -0.182075498     -0.060642380 
     ##         religion           beauty        parenting           dating 
-    ##     -0.174364062     -0.209977167     -0.100264020      0.181788655 
+    ##     -0.297554552     -0.267519126     -0.304886088     -0.091888934 
     ##           school personal_fitness          fashion   small_business 
-    ##     -0.143401555      2.070945307     -0.108249268     -0.065515075 
+    ##     -0.244818727     -0.333542495     -0.262883446     -0.095327811 
     ##             spam            adult 
-    ##      0.003346418     -0.001584891
+    ##      0.004585328      0.010405002
 
 ``` r
 cluster_all$center[4,]
@@ -912,31 +912,31 @@ cluster_all$center[6,]
 qplot(beauty, fashion, data=Social_Market2, color=factor(cluster_all$cluster))
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-3.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-3.png)
 
 ``` r
 qplot(religion, parenting, data=Social_Market2, color=factor(cluster_all$cluster))
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-4.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-4.png)
 
 ``` r
 qplot(personal_fitness, health_nutrition,  data=Social_Market, color=factor(cluster_all$cluster))
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-5.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-5.png)
 
 ``` r
 qplot(politics, travel, data=Social_Market, color=factor(cluster_all$cluster))
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-6.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-6.png)
 
 ``` r
 qplot(college_uni, online_gaming, data=Social_Market, color=factor(cluster_all$cluster))
 ```
 
-![](R_HW_Part_2_Ex_1_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-7.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-7.png)
 
 After studying the various things that the twitter followers talk about, some interesting traits were discovered among the followers, revealed through the K-means clustering tequnique. For Cluster number 1, a higher values for fashion, beauty, shopping and cooking can be seen. This suggests that twitter users in this particular group maybe trendy millenials. Cluster 2 shows a more family oriented group of people who seem to care most about parenting, school, crafts, food, religion and family.cluster 3 explains the interests of a group of possibly young, outdoorsy people who are perhaps committed to a healthy lifestyle, discussing topics like personal fitness and health and nutrition.Cluster 4 indicates a group of educated people whose interests are evident in the high values for computers, news, politics and travel. Cluster 5 could be depicting college adults with interests in online gaming, sports and university related activities.Finally, cluster 6 clubs the remaining followers together in a general category, where no particular interest stands out.
 

@@ -1,6 +1,6 @@
 ---
 title: 'STA 380, Part 2: Exercises 1'
-author: "Ishita Aishwarya Antia Jianing"
+author: "Bhat Cui Ishita Srikanth"
 date: "August 8, 2017"
 output: rmarkdown::github_document
 ---
