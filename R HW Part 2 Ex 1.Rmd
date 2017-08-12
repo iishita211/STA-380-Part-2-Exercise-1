@@ -1,0 +1,430 @@
+---
+title: 'STA 380, Part 2: Exercises 1'
+author: "Ishita"
+date: "August 8, 2017"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+![Probability Ques 1](C:\Users\Ishita\Downloads\r probability_4.jpg)
+
+![Probability Ques 2](C:\Users\Ishita\Downloads\r probability_2.jpg)
+
+![Probability Ques 2 cont.](C:\Users\Ishita\Downloads\r probability_3.jpg)
+
+### Exploratory analysis : green buildings
+
+*** Step 1 : Analysis of conclusions by stats guru ***
+```{r}
+library(ggplot2)
+greenbuildings = read.csv('greenbuildings.csv')
+qplot(greenbuildings$age, greenbuildings$Rent, col=greenbuildings$green_rating,xlab='Age',ylab='Rent', main='Age vs Rent')
+lm_green = lm(Rent~., data = greenbuildings)
+summary(lm_green)
+confint(lm_green)
+```
+From the above plot, we can see that most of the green-buldings are relatively new, while non-green buildings are distributed across both new and old. We do a linear regression to determine factors that contribute to rent, and we see that age is one of the factors having low p value,a negative intercept and a 95% confidence interval not containing 0. This shows that as the age increases, rent decreases. Thus, comparing the median rent of green buildings(all relatively new, hence higher rent) to median rent on non-green buildings(both new and old, hence more distributed rent) would always yeild us a result which says green buildings have higher rent than non-green. We need to compare green and non-green buildings of similar age to arrive at a more robust conclusion.
+
+```{r}
+qplot(greenbuildings$cluster_rent, greenbuildings$Rent, col=greenbuildings$green_rating,xlab='Cluster Rent',ylab='Rent', main='Cluster Rent vs Rent')
+```
+
+We know that for each cluster, there is one cluster rent defined, and we have one green building in each cluster. Now from the above plot, we can see that there are more non-green buildings in the lower rent clusters than the higher rent clusters. Hence the median rent for non-green will be more inclined towards lower rent always in this case, and the median for green will be higher. This also proves that taking an overall median is not a good strategy in this problem statment.
+
+```{r}
+count<-table(greenbuildings$green_rating,greenbuildings$amenities)
+
+x <- barplot(count, col=c("yellow", "darkgreen"), 
+    legend=TRUE, border=NA, xlim=c(0,8), args.legend=
+        list(bty="n", border=NA), 
+    ylab="Number of buildings", xlab="Amenities")
+```
+We plotted the density of green and non-green buildings vs amenities, and we see that non-green buildings are distributed almost equally across amenities and non-amenities. However, there are more green buildings with amenities than without. Hence, median of green buildings will be probably be inclined towards higher rent( as buildings with amenities have higher rent, as seen in the regression coefficient and p values for amenities ).Thus, median would not be a right method to compare the rent of green and non-green buildings.
+
+```{r}
+
+greenbuildings$Class=ifelse(greenbuildings$class_a==1,'a',ifelse(greenbuildings$class_b==1,'b','c'))
+count2<-table(greenbuildings$green_rating,greenbuildings$Class)
+
+x <- barplot(count2, col=c("yellow", "darkgreen"), 
+    legend=TRUE, border=NA, xlim=c(0,8), args.legend=
+        list(bty="n", border=NA), 
+    ylab="Number of buildings", xlab="Class")
+
+```
+From the above plot, we see that we have most of the green buildings in class a, unlike non green buildings.
+From the linear regression in step 1, we see that rent for class a and class b is higher than rent for class c ( postive coefficient, very low p value and 95% confidence interval not containing 0). Here again, we prove that median is not the right way to calculate the differnce of rent between green and non green buildings.
+
+
+*** Step 2 : Improving the green building analysis ***
+
+From the analysis of the conclusion by stats guru in step 1, we concluded that the method was incorrect due to uneven distribution of green and non-green buildings accross different parameters. Hence, we dedided that we needed to compare green and non-green buildings having similar properties.
+
+To dervie our similar non-green buildings set, we took the following assumptions:
+
+
+
+
+
+```{r}
+buildings_green = subset(greenbuildings, greenbuildings$green_rating==1, select = - c(greenbuildings$green_rating))
+buildings_non_green = subset(greenbuildings, greenbuildings$green_rating==0 ,select =-c(greenbuildings$green_rating))
+```
+
+### Bootstrapping
+
+
+```{r}
+library(mosaic)
+library(quantmod)
+library(foreach)
+library(dplyr)
+mystocks = c("SPY", "TLT", "LQD","EEM","VNQ")
+myprices = getSymbols(mystocks, from = '2007-01-01')
+for(ticker in mystocks) {
+  expr = paste0(ticker, "a = adjustOHLC(", ticker, ")")
+  eval(parse(text=expr))
+}
+all_returns = cbind(ClCl(SPYa),ClCl(TLTa),ClCl(LQDa),ClCl(EEMa),ClCl(VNQa))
+all_returns = as.matrix(na.omit(all_returns))
+```
+
+-------------------------------------------------------------------------------------------------------------------------------------
+Q1 Marshal appropriate evidence to characterize the risk/return properties of the five asset classes
+--------------------------------------------------------------------------------------------------------------------------------------
+
+Q1 step1. Look at close-to-close changes plots
+
+```{r}
+plot(all_returns[,1],type='l',main='SPY', xlab='01/02/2007 to 08/07/2017', ylab = 'returns' ) 
+plot(all_returns[,2],type='l',main='TLT', xlab='01/02/2007 to 08/07/2017', ylab = 'returns' ) 
+plot(all_returns[,3],type='l',main='LQD', xlab='01/02/2007 to 08/07/2017', ylab = 'returns' ) 
+```
+SPY, the stock market risk in general.
+TLT, more stable than stock market index.
+LQD, the safest choice so far.
+
+```{r}
+plot(all_returns[,4],type='l',main='EEM', xlab='01/02/2007 to 08/07/2017', ylab = 'returns' ) 
+plot(all_returns[,5],type='l',main='VNQ', xlab='01/02/2007 to 08/07/2017', ylab = 'returns' ) 
+```
+EEM, looks pretty stable but there are strange outliers that has magnified the scale of y. So we'd better look at it from 2009 to get a clearer idea.
+VNQ, also looks fluctuant. So again we need to change the scale of y.
+
+```{r}
+mystocks_2009 = c("EEM","VNQ")
+myprices_2009 = getSymbols(mystocks_2009, from = '2009-01-01')
+EEM_2009a = adjustOHLC(EEM)
+VNQ_2009a = adjustOHLC(VNQ)
+plot(ClCl(EEM_2009a)) 
+plot(ClCl(VNQ_2009a)) 
+```
+As we can see from the new plot, EEM and VNQ are more volatile than SPY (EEM> VNQ).
+
+Then we got a rough risk ranking of these ETFs: EEM> VNQ> SPY> TLT> LQD. After learning about these ETFs, our intuition told us this ranking made perfect sense.
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Q1 step2. Look at the variances and average returns.
+
+```{r}
+colMeans(all_returns)
+apply(all_returns, 2, var)
+```
+The above showed:
+A risk ranking (by variance): EEM> VNQ> SPY> TLT> LQD, which is exactly in the same order as we saw in plots.
+A returns ranking (by mean): EEM> VNQ> SPY> TLT> LQD.  This ranking of returns is same as the ranking of risk(higher returns come with higher risk).
+In conclusion, LQD and TLT produce relatively lower but stabler returns while EEM provides the highest expected returns together with the highest risk. Meanwhile, SPY and VNQ have medium returns and risk (SPY slightly higher than VNQ).
+------------------------------------------------------------------------------------------------------------------------------------------
+
+Q1 step3. Look at the correlations and autocorrelations
+
+```{r}
+pairs(all_returns)
+```
+These returns can be viewed as draws from the joint distribution
+
+```{r}
+cor(all_returns)
+```
+The sample correlation matrix
+All of them have positive correlations between each other(since they all change with the economic cycle) except that TLT is negatively correlated with SPY, EEM and VNQ.
+
+------------------------------------------------------------------------------------------------------------------------------
+Q2 Outlines your choice of the "safe" and "aggressive" portfolios.
+------------------------------------------------------------------------------------------------------------------------------
+
+From what we got in Question 1, to find the safe portfolio, we can:
+1.use the funds with smaller variances (also relatively lower returns) like LQD, TLT, and SPY 
+2.choose the funds that have low correlations between them, especially consider using TLT together with other funds (hedging)
+
+*Therefore, we try allocating 40% of asset in LQD, 30% of asset in TLT, 30% of asset in SPY
+
+As for discovering the aggressive portfolio, we have following strategies:
+1.use the funds with the biggest variances (also the highest returns) like EEM, VNQ, and SPY
+2.choose the funds that have high correlations between them, specifically we should exclude TLT
+3.choose only very few funds so that the risk can not be shared
+
+*Thus here we allocate 80% of asset in EEM and 20% of asset in VNQ
+
+--------------------------------------------------------------------------------------------------------------------------------
+Q3 Use bootstrap resampling to estimate the 4-week (20 trading day) value at risk of each of the three portfolios at the 5% level.
+--------------------------------------------------------------------------------------------------------------------------------
+
+Q3 step1. Simulate the first portfolio(the even split: 20% of assets in each of the five ETFs).
+
+Looped over four trading weeks. Simulated for 5000 times and got the mean returns.
+
+```{r}
+initial_wealth = 100000
+sim1 = foreach(i=1:5000, .combine='rbind') %do% {
+  total_wealth = initial_wealth
+  weights = c(0.2, 0.2, 0.2, 0.2, 0.2)
+  holdings = weights * total_wealth
+  n_days = 20
+  wealthtracker = rep(0, n_days)
+  for(today in 1:n_days) {
+    return.today = resample(all_returns, 1, orig.ids=FALSE)
+    holdings = holdings + holdings*return.today
+    total_wealth = sum(holdings)
+    wealthtracker[today] = total_wealth
+  }
+  wealthtracker
+}
+```
+```{r}
+hist(sim1[,n_days], 100,main='Frequency of total_wealth : Portfolio 1',xlab='total_wealth')
+hist(sim1[,n_days]- initial_wealth, breaks=100, main='Frequency of profit/loss : Portfolio 1', xlab = 'profit/loss')
+```
+```{r}
+mean(sim1[,n_days]) 
+```
+```{r}
+var(sim1[,n_days])
+```
+```{r}
+quantile(sim1[,n_days], 0.05) - initial_wealth
+```
+
+According to the simulation, the 4-week 5% value at risk is about -$6600.
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+Q3 Step2. Now simulate the safe portfolio : 40% of asset in LQD, 30% of asset in TLT, 30% of asset in SPY
+```{r}
+initial_wealth = 100000
+sim2 = foreach(i=1:5000, .combine='rbind') %do% {
+  total_wealth = initial_wealth
+  weights = c(0.3, 0.3, 0.4, 0.0, 0.0)
+  holdings = weights * total_wealth
+  n_days = 20
+  wealthtracker = rep(0, n_days)
+  for(today in 1:n_days) {
+    return.today = resample(all_returns, 1, orig.ids=FALSE)
+    holdings = holdings + holdings*return.today
+    total_wealth = sum(holdings)
+    wealthtracker[today] = total_wealth
+  }
+  wealthtracker
+}
+```
+```{r}
+hist(sim2[,n_days], 100,main='Frequency of total_wealth : Portfolio 2',xlab='total_wealth')
+hist(sim2[,n_days]- initial_wealth, breaks=100, main='Frequency of profit/loss : Portfolio 2', xlab = 'profit/loss')
+```
+```{r}
+mean(sim2[,n_days]) 
+```
+```{r}
+var(sim2[,n_days])
+```
+The variance is far smaller than that of portfolio 1
+
+```{r}
+# Calculate 5% value at risk
+quantile(sim2[,n_days], 0.05) - initial_wealth
+```
+According to the simulation, the 4-week 5% value at risk is about -$-3100 (much better than the even split)
+
+As a conclusion, our second portfolio has mean returns lower than the first one, but has much smaller variance and thus less value at risk. It is a safer porfolio than the first one.
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+Q3 Step3. Now simulate the aggresive portfolio : 80% of asset in EEM and 20% of asset in VNQ
+```{r}
+initial_wealth = 100000
+sim3 = foreach(i=1:5000, .combine='rbind') %do% {
+  total_wealth = initial_wealth
+  weights = c(0.0, 0.0, 0.0, 0.8, 0.2)
+  holdings = weights * total_wealth
+  n_days = 20
+  wealthtracker = rep(0, n_days)
+  for(today in 1:n_days) {
+    return.today = resample(all_returns, 1, orig.ids=FALSE)
+    holdings = holdings + holdings*return.today
+    total_wealth = sum(holdings)
+    wealthtracker[today] = total_wealth
+  }
+  wealthtracker
+}
+```
+```{r}
+hist(sim3[,n_days], 100,main='Frequency of total_wealth : Portfolio 3',xlab='total_wealth')
+hist(sim3[,n_days]- initial_wealth, breaks=100, main='Frequency of profit/loss : Portfolio 3', xlab = 'profit/loss')
+```
+```{r}
+mean(sim3[,n_days]) 
+```
+```{r}
+var(sim3[,n_days])
+```
+```{r}
+quantile(sim3[,n_days], 0.05) - initial_wealth
+```
+According to our simulation, the 4-week value at risk is about -$12900, which shows far more risk than the above portfolios.
+
+The third portfolio has mean returns higher than others', but has much higher variance and thus more value at risk. It is a more aggresive but also riskier option than the other ones.
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+Q4 Compare the results for each portfolio in a way that would allow the reader to make an intelligent decision among the three options.
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+```{r}
+means<-c(mean(sim1[,n_days]) , mean(sim2[,n_days]),mean(sim3[,n_days]))
+means
+```
+```{r}
+vars<-c(var(sim1[,n_days]),var(sim2[,n_days]),var(sim3[,n_days]))
+vars
+```
+```{r}
+hist(sim1[,n_days]- initial_wealth, breaks=100, main='Frequency of profit/loss : Portfolio 1', xlab = 'profit/loss')
+hist(sim2[,n_days]- initial_wealth, breaks=100, main='Frequency of profit/loss : Portfolio 2', xlab = 'profit/loss')
+hist(sim3[,n_days]- initial_wealth, breaks=100, main='Frequency of profit/loss : Portfolio 3', xlab = 'profit/loss')
+```
+```{r}
+VaR_sim1=quantile(sim1[,n_days], 0.05) - initial_wealth
+VaR_sim2=quantile(sim2[,n_days], 0.05) - initial_wealth
+VaR_sim3=quantile(sim3[,n_days], 0.05) - initial_wealth
+VaRs<-c(VaR_sim1,VaR_sim2,VaR_sim3)
+VaRs
+```
+
+* Suggestions for investment
+
+*The second portfolio might not provide a high expectation for returns (approximately $600, or 0.6% through 4 weeks) but it keeps investors away from high risk. It guarantees that 95% of time, their maximum loss would be limited to about $3000, or 3.0% in percentage.
+Thus we consider this as a safe strategy, which could be the ideal one for risk averters and those who merely want maintenance of assets value.
+
+*On the contrary, the third portfolio provides high expected returns (approximately $1800, or 1.8% through 4 weeks). However it's also a dangerous option because the investors are at the same time exposed to more risk. The loss could be rather high. (5% of time, they could lose over $12900, 12.9% in percentage)
+Therefore, this portfolio would be recommended to those players with some "all-in spirit", i.e. who are willing to take the risk for higher returns.
+
+
+### Market segmentation
+
+This report analyzes potential customer base for NutritionH20 by studying the tweets of its twitter followers. Each tweet from each follower is classifies into one of the 36 categories that indicates some of the interests of the same followers. We begin our analyzes with a simple bar plot that helps us visualize the frequency of each category. This gives us a broad idea of what is a common interest or ideas of several followers.
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(LICORS)
+library(reshape2)
+setwd("C:\\Users\\Ani\\Documents\\R\\RStudio\\class scripts")
+Social_Market=read.csv("social_marketing.csv")
+#head(Social_Market)
+Social_Market2=Social_Market[, -cbind(1,2,6)]
+head(Social_Market2)
+attach(Social_Market2)
+#summary(Social_Market2)
+#str(Social_Market2)
+
+#Get frequency of topics talked about by twitter users
+interest_sum=as.data.frame(colSums(Social_Market2[,-1]))
+colnames(interest_sum) <- "sum"
+interest_sum$variable <- as.factor(rownames(interest_sum))
+rownames(interest_sum) <- 1:nrow(interest_sum)
+ggplot(interest_sum,aes(x=variable,y=sum)) + 
+  geom_bar(stat='identity') + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+In the barplot above, what stands out the most chatter. However, chatter comprises of a lot of different topics and hence cannot be correctly used to determine interests. More relevant topics like health_nutrition, cooking,photo_sharing also have high occurance rate. Thus, these groups were looked at in greater detail in order to find other similarities among them. 
+```{r}
+
+#Find correlation between different features
+sm_cor <- as.matrix(cor(Social_Market[,-1]))
+sm_cor_melt <- arrange(melt(sm_cor), -abs(value))
+#sm_cor_melt
+```
+The above table gives us the correlation between each of our features. We see that our intuitions are confirmed through data depicting correlations that we would expect.
+To get more information on the traits of various users, 3 techniques were applied. First, PCA was done with no success. Next, a hierarchichal cluster was tried on the dataset but this too did not give satisfactory results. Finally, K-means technique successfully brought out specific traits of followers who tweet about various different topics. 
+
+```{r}
+
+# Try PCA to get significant features.
+SM_scaled <- scale(Social_Market2, center=TRUE, scale=TRUE) 
+#summary(SM_scaled)
+mu = attr(SM_scaled,"scaled:center")
+sigma = attr(SM_scaled,"scaled:scale")
+
+pc1 = prcomp(SM_scaled)
+#summary(pc1)
+#par(mfrow=c(1,2))
+#plot(SM_scaled, xlim=c(-2.5,2.5), ylim=c(-2.5,2.5))
+
+# Try Hierarchical Clustering
+SM_scaled_transpose=t(SM_scaled)
+
+SM_scaled_dist = dist(SM_scaled_transpose, method='euclidean')
+
+hier_sm_t = hclust(SM_scaled_dist, method='average')
+
+
+# Plot the dendrogram
+plot(hier_sm_t, cex=0.8)
+
+
+
+## Kmeans method to find interesting associations within groups
+
+##Find optimal K number of centres
+k.max <- 15 # Maximal number of clusters
+data <- SM_scaled
+wss <- sapply(1:k.max, 
+              function(k){kmeans(data, k, nstart=2 )$tot.withinss})
+plot(1:k.max, wss,
+     type="b", pch = 19, frame = FALSE, 
+     xlab="Number of clusters K",
+     ylab="Total within-clusters sum of squares")
+
+
+#make K clusters
+cluster_all <- kmeanspp(SM_scaled, k=6, nstart=50)
+cluster_all$center[1,]
+cluster_all$center[2,]
+cluster_all$center[3,]
+cluster_all$center[4,]
+cluster_all$center[5,]
+cluster_all$center[6,]
+
+qplot(beauty, fashion, data=Social_Market2, color=factor(cluster_all$cluster))
+qplot(religion, parenting, data=Social_Market2, color=factor(cluster_all$cluster))
+qplot(personal_fitness, health_nutrition,  data=Social_Market, color=factor(cluster_all$cluster))
+qplot(politics, travel, data=Social_Market, color=factor(cluster_all$cluster))
+qplot(college_uni, online_gaming, data=Social_Market, color=factor(cluster_all$cluster))
+
+  
+```
+
+
+After studying the various things that the twitter followers talk about, some interesting traits were discovered among the followers, revealed through the K-means clustering tequnique. For Cluster number 1, a higher values for fashion, beauty, shopping and cooking can be seen. This suggests that twitter users in this particular group maybe trendy millenials. Cluster 2 shows a more family oriented group of people who seem to care most about parenting, school, crafts, food, religion and family.cluster 3 explains the interests of a group of possibly young, outdoorsy people who are perhaps committed to a healthy lifestyle, discussing topics like personal fitness and health and nutrition.Cluster 4 indicates a group of educated people whose interests are evident in the high values for computers, news, politics and travel. Cluster 5 could be depicting college adults with interests in online gaming, sports and university related activities.Finally, cluster 6 clubs the remaining followers together in a general category, where no particular interest stands out. 
+
+From the above results, it is recommended that NutritionH20 design a marketing strategy keeping the various similarities between the different twitter followers in mind. trendy people, families, educated, college-going adults and health concious youth can be targeted in various ways that specifically cater to their needs. If the given dataset is divided into further clusters, it can be seen that there isn't any one topic that seems to be of particular interest to the followers. Thus,these groups can benefit the most through general advertitizing. 
+
+
+
