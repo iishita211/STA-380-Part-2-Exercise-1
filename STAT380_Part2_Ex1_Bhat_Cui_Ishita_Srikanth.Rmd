@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ![Probability Ques 1](https://github.com/iishita211/STA-380-Part-2-Exercise-1/blob/master/r%20probability_4.jpg)
 
-![Probability Ques 2](https://github.com/iishita211/STA-380-Part-2-Exercise-1/blob/master/r%20probability_3.jpg)
+![Probability Ques 2](https://github.com/iishita211/STA-380-Part-2-Exercise-1/blob/master/r%20probability_2.jpg)
 
 ![Probability Ques 2 cont.](https://github.com/iishita211/STA-380-Part-2-Exercise-1/blob/master/r%20probability_3.jpg)
 
@@ -396,10 +396,14 @@ mu = attr(SM_scaled,"scaled:center")
 sigma = attr(SM_scaled,"scaled:scale")
 
 pc1 = prcomp(SM_scaled)
-#summary(pc1)
+summary(pc1)
+
+
 #par(mfrow=c(1,2))
 #plot(SM_scaled, xlim=c(-2.5,2.5), ylim=c(-2.5,2.5))
+```
 
+```{r}
 # Try Hierarchical Clustering
 SM_scaled_transpose=t(SM_scaled)
 
@@ -411,7 +415,9 @@ hier_sm_t = hclust(SM_scaled_dist, method='average')
 # Plot the dendrogram
 plot(hier_sm_t, cex=0.8)
 
+```
 
+```{r}
 
 ## Kmeans method to find interesting associations within groups
 

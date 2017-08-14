@@ -5,7 +5,7 @@ August 8, 2017
 
 ![Probability Ques 1](https://github.com/iishita211/STA-380-Part-2-Exercise-1/blob/master/r%20probability_4.jpg)
 
-![Probability Ques 2](https://github.com/iishita211/STA-380-Part-2-Exercise-1/blob/master/r%20probability_3.jpg)
+![Probability Ques 2](https://github.com/iishita211/STA-380-Part-2-Exercise-1/blob/master/r%20probability_2.jpg)
 
 ![Probability Ques 2 cont.](https://github.com/iishita211/STA-380-Part-2-Exercise-1/blob/master/r%20probability_3.jpg)
 
@@ -460,20 +460,20 @@ hist(sim1[,n_days]- initial_wealth, breaks=100, main='Frequency of profit/loss :
 mean(sim1[,n_days]) 
 ```
 
-    ## [1] 100962.2
+    ## [1] 100929.7
 
 ``` r
 var(sim1[,n_days])
 ```
 
-    ## [1] 30598516
+    ## [1] 30298982
 
 ``` r
 quantile(sim1[,n_days], 0.05) - initial_wealth
 ```
 
     ##        5% 
-    ## -6342.018
+    ## -6193.227
 
 According to the simulation, the 4-week 5% value at risk is about -$6600.
 
@@ -515,13 +515,13 @@ hist(sim2[,n_days]- initial_wealth, breaks=100, main='Frequency of profit/loss :
 mean(sim2[,n_days]) 
 ```
 
-    ## [1] 100602.2
+    ## [1] 100594.7
 
 ``` r
 var(sim2[,n_days])
 ```
 
-    ## [1] 4688180
+    ## [1] 5007218
 
 The variance is far smaller than that of portfolio 1
 
@@ -531,7 +531,7 @@ quantile(sim2[,n_days], 0.05) - initial_wealth
 ```
 
     ##        5% 
-    ## -2854.741
+    ## -2946.111
 
 According to the simulation, the 4-week 5% value at risk is about -$-3100 (much better than the even split)
 
@@ -575,20 +575,20 @@ hist(sim3[,n_days]- initial_wealth, breaks=100, main='Frequency of profit/loss :
 mean(sim3[,n_days]) 
 ```
 
-    ## [1] 102020.7
+    ## [1] 101530.1
 
 ``` r
 var(sim3[,n_days])
 ```
 
-    ## [1] 267707488
+    ## [1] 211787753
 
 ``` r
 quantile(sim3[,n_days], 0.05) - initial_wealth
 ```
 
     ##        5% 
-    ## -13004.39
+    ## -13401.43
 
 According to our simulation, the 4-week value at risk is about -$12900, which shows far more risk than the above portfolios.
 
@@ -603,14 +603,14 @@ means<-c(mean(sim1[,n_days]) , mean(sim2[,n_days]),mean(sim3[,n_days]))
 means
 ```
 
-    ## [1] 100962.2 100602.2 102020.7
+    ## [1] 100929.7 100594.7 101530.1
 
 ``` r
 vars<-c(var(sim1[,n_days]),var(sim2[,n_days]),var(sim3[,n_days]))
 vars
 ```
 
-    ## [1]  30598516   4688180 267707488
+    ## [1]  30298982   5007218 211787753
 
 ``` r
 hist(sim1[,n_days]- initial_wealth, breaks=100, main='Frequency of profit/loss : Portfolio 1', xlab = 'profit/loss')
@@ -639,7 +639,7 @@ VaRs
 ```
 
     ##         5%         5%         5% 
-    ##  -6342.018  -2854.741 -13004.391
+    ##  -6193.227  -2946.111 -13401.433
 
 -   Suggestions for investment
 
@@ -734,10 +734,41 @@ mu = attr(SM_scaled,"scaled:center")
 sigma = attr(SM_scaled,"scaled:scale")
 
 pc1 = prcomp(SM_scaled)
-#summary(pc1)
+summary(pc1)
+```
+
+    ## Importance of components%s:
+    ##                           PC1     PC2     PC3    PC4     PC5     PC6
+    ## Standard deviation     2.0993 1.66487 1.59129 1.5295 1.46750 1.28559
+    ## Proportion of Variance 0.1296 0.08152 0.07448 0.0688 0.06334 0.04861
+    ## Cumulative Proportion  0.1296 0.21114 0.28562 0.3544 0.41776 0.46637
+    ##                            PC7     PC8     PC9    PC10    PC11    PC12
+    ## Standard deviation     1.21644 1.17388 1.15047 1.05257 0.99331 0.96364
+    ## Proportion of Variance 0.04352 0.04053 0.03893 0.03259 0.02902 0.02731
+    ## Cumulative Proportion  0.50989 0.55042 0.58935 0.62194 0.65096 0.67827
+    ##                           PC13   PC14    PC15    PC16    PC17    PC18
+    ## Standard deviation     0.96070 0.9347 0.92207 0.90804 0.85339 0.83369
+    ## Proportion of Variance 0.02715 0.0257 0.02501 0.02425 0.02142 0.02044
+    ## Cumulative Proportion  0.70541 0.7311 0.75612 0.78037 0.80179 0.82223
+    ##                           PC19    PC20    PC21    PC22    PC23    PC24
+    ## Standard deviation     0.80573 0.75319 0.69407 0.68451 0.65246 0.64867
+    ## Proportion of Variance 0.01909 0.01668 0.01417 0.01378 0.01252 0.01238
+    ## Cumulative Proportion  0.84132 0.85801 0.87218 0.88596 0.89848 0.91085
+    ##                           PC25    PC26    PC27    PC28    PC29    PC30
+    ## Standard deviation     0.63658 0.63183 0.61511 0.59922 0.59394 0.55072
+    ## Proportion of Variance 0.01192 0.01174 0.01113 0.01056 0.01038 0.00892
+    ## Cumulative Proportion  0.92277 0.93451 0.94564 0.95620 0.96658 0.97550
+    ##                          PC31    PC32    PC33    PC34
+    ## Standard deviation     0.4845 0.47782 0.43809 0.42201
+    ## Proportion of Variance 0.0069 0.00672 0.00564 0.00524
+    ## Cumulative Proportion  0.9824 0.98912 0.99476 1.00000
+
+``` r
 #par(mfrow=c(1,2))
 #plot(SM_scaled, xlim=c(-2.5,2.5), ylim=c(-2.5,2.5))
+```
 
+``` r
 # Try Hierarchical Clustering
 SM_scaled_transpose=t(SM_scaled)
 
@@ -750,7 +781,7 @@ hier_sm_t = hclust(SM_scaled_dist, method='average')
 plot(hier_sm_t, cex=0.8)
 ```
 
-![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-1.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-35-1.png)
 
 ``` r
 ## Kmeans method to find interesting associations within groups
@@ -766,81 +797,12 @@ plot(1:k.max, wss,
      ylab="Total within-clusters sum of squares")
 ```
 
-![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-2.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-36-1.png)
 
 ``` r
 #make K clusters
 cluster_all <- kmeanspp(SM_scaled, k=6, nstart=50)
 cluster_all$center[1,]
-```
-
-    ##   current_events           travel    photo_sharing          tv_film 
-    ##      0.019638206     -0.153589376      0.002291646     -0.049831814 
-    ##    sports_fandom         politics             food           family 
-    ##     -0.196806571     -0.176309500      0.415359828     -0.069501886 
-    ##  home_and_garden            music             news    online_gaming 
-    ##      0.169663015      0.051469402     -0.049110034     -0.130862135 
-    ##         shopping health_nutrition      college_uni   sports_playing 
-    ##      0.052766362      2.093713116     -0.207522028     -0.025632200 
-    ##          cooking              eco        computers         business 
-    ##      0.371432702      0.532759430     -0.075368701      0.071056625 
-    ##         outdoors           crafts       automotive              art 
-    ##      1.615660280      0.094193809     -0.121654546      0.011485213 
-    ##         religion           beauty        parenting           dating 
-    ##     -0.174364062     -0.209977167     -0.100264020      0.181788655 
-    ##           school personal_fitness          fashion   small_business 
-    ##     -0.143401555      2.070945307     -0.108249268     -0.065515075 
-    ##             spam            adult 
-    ##      0.003346418     -0.001584891
-
-``` r
-cluster_all$center[2,]
-```
-
-    ##   current_events           travel    photo_sharing          tv_film 
-    ##       0.18775203      -0.03680769       1.25305434      -0.02859905 
-    ##    sports_fandom         politics             food           family 
-    ##      -0.21470461      -0.12508340      -0.19912126       0.03485210 
-    ##  home_and_garden            music             news    online_gaming 
-    ##       0.14011507       0.52807920      -0.07190188      -0.06135653 
-    ##         shopping health_nutrition      college_uni   sports_playing 
-    ##       0.33660930      -0.06596576      -0.02830122       0.17170436 
-    ##          cooking              eco        computers         business 
-    ##       2.60858576       0.07648315       0.06359174       0.25681261 
-    ##         outdoors           crafts       automotive              art 
-    ##       0.02275679       0.14302548       0.05635440       0.11386586 
-    ##         religion           beauty        parenting           dating 
-    ##      -0.13151146       2.41374452      -0.08262480       0.13362898 
-    ##           school personal_fitness          fashion   small_business 
-    ##       0.18662311      -0.04670174       2.49234162       0.23206970 
-    ##             spam            adult 
-    ##      -0.03548519       0.00436950
-
-``` r
-cluster_all$center[3,]
-```
-
-    ##   current_events           travel    photo_sharing          tv_film 
-    ##     -0.064596032     -0.213018719     -0.151425757     -0.049035274 
-    ##    sports_fandom         politics             food           family 
-    ##     -0.287572776     -0.255730671     -0.353961101     -0.257261744 
-    ##  home_and_garden            music             news    online_gaming 
-    ##     -0.111185018     -0.124043005     -0.243249375     -0.233404079 
-    ##         shopping health_nutrition      college_uni   sports_playing 
-    ##     -0.061161953     -0.327090480     -0.228191739     -0.230135009 
-    ##          cooking              eco        computers         business 
-    ##     -0.334275122     -0.159861312     -0.233029570     -0.124109370 
-    ##         outdoors           crafts       automotive              art 
-    ##     -0.314124678     -0.186919505     -0.182075498     -0.060642380 
-    ##         religion           beauty        parenting           dating 
-    ##     -0.297554552     -0.267519126     -0.304886088     -0.091888934 
-    ##           school personal_fitness          fashion   small_business 
-    ##     -0.244818727     -0.333542495     -0.262883446     -0.095327811 
-    ##             spam            adult 
-    ##      0.004585328      0.010405002
-
-``` r
-cluster_all$center[4,]
 ```
 
     ##   current_events           travel    photo_sharing          tv_film 
@@ -863,7 +825,7 @@ cluster_all$center[4,]
     ##     0.0280967942     0.0241600638
 
 ``` r
-cluster_all$center[5,]
+cluster_all$center[2,]
 ```
 
     ##   current_events           travel    photo_sharing          tv_film 
@@ -886,7 +848,53 @@ cluster_all$center[5,]
     ##     -0.014661068      0.005548496
 
 ``` r
-cluster_all$center[6,]
+cluster_all$center[3,]
+```
+
+    ##   current_events           travel    photo_sharing          tv_film 
+    ##      0.019638206     -0.153589376      0.002291646     -0.049831814 
+    ##    sports_fandom         politics             food           family 
+    ##     -0.196806571     -0.176309500      0.415359828     -0.069501886 
+    ##  home_and_garden            music             news    online_gaming 
+    ##      0.169663015      0.051469402     -0.049110034     -0.130862135 
+    ##         shopping health_nutrition      college_uni   sports_playing 
+    ##      0.052766362      2.093713116     -0.207522028     -0.025632200 
+    ##          cooking              eco        computers         business 
+    ##      0.371432702      0.532759430     -0.075368701      0.071056625 
+    ##         outdoors           crafts       automotive              art 
+    ##      1.615660280      0.094193809     -0.121654546      0.011485213 
+    ##         religion           beauty        parenting           dating 
+    ##     -0.174364062     -0.209977167     -0.100264020      0.181788655 
+    ##           school personal_fitness          fashion   small_business 
+    ##     -0.143401555      2.070945307     -0.108249268     -0.065515075 
+    ##             spam            adult 
+    ##      0.003346418     -0.001584891
+
+``` r
+cluster_all$center[4,]
+```
+
+    ##   current_events           travel    photo_sharing          tv_film 
+    ##       0.18775203      -0.03680769       1.25305434      -0.02859905 
+    ##    sports_fandom         politics             food           family 
+    ##      -0.21470461      -0.12508340      -0.19912126       0.03485210 
+    ##  home_and_garden            music             news    online_gaming 
+    ##       0.14011507       0.52807920      -0.07190188      -0.06135653 
+    ##         shopping health_nutrition      college_uni   sports_playing 
+    ##       0.33660930      -0.06596576      -0.02830122       0.17170436 
+    ##          cooking              eco        computers         business 
+    ##       2.60858576       0.07648315       0.06359174       0.25681261 
+    ##         outdoors           crafts       automotive              art 
+    ##       0.02275679       0.14302548       0.05635440       0.11386586 
+    ##         religion           beauty        parenting           dating 
+    ##      -0.13151146       2.41374452      -0.08262480       0.13362898 
+    ##           school personal_fitness          fashion   small_business 
+    ##       0.18662311      -0.04670174       2.49234162       0.23206970 
+    ##             spam            adult 
+    ##      -0.03548519       0.00436950
+
+``` r
+cluster_all$center[5,]
 ```
 
     ##   current_events           travel    photo_sharing          tv_film 
@@ -909,34 +917,57 @@ cluster_all$center[6,]
     ##     -0.007473870     -0.092611297
 
 ``` r
+cluster_all$center[6,]
+```
+
+    ##   current_events           travel    photo_sharing          tv_film 
+    ##     -0.064596032     -0.213018719     -0.151425757     -0.049035274 
+    ##    sports_fandom         politics             food           family 
+    ##     -0.287572776     -0.255730671     -0.353961101     -0.257261744 
+    ##  home_and_garden            music             news    online_gaming 
+    ##     -0.111185018     -0.124043005     -0.243249375     -0.233404079 
+    ##         shopping health_nutrition      college_uni   sports_playing 
+    ##     -0.061161953     -0.327090480     -0.228191739     -0.230135009 
+    ##          cooking              eco        computers         business 
+    ##     -0.334275122     -0.159861312     -0.233029570     -0.124109370 
+    ##         outdoors           crafts       automotive              art 
+    ##     -0.314124678     -0.186919505     -0.182075498     -0.060642380 
+    ##         religion           beauty        parenting           dating 
+    ##     -0.297554552     -0.267519126     -0.304886088     -0.091888934 
+    ##           school personal_fitness          fashion   small_business 
+    ##     -0.244818727     -0.333542495     -0.262883446     -0.095327811 
+    ##             spam            adult 
+    ##      0.004585328      0.010405002
+
+``` r
 qplot(beauty, fashion, data=Social_Market2, color=factor(cluster_all$cluster))
 ```
 
-![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-3.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-36-2.png)
 
 ``` r
 qplot(religion, parenting, data=Social_Market2, color=factor(cluster_all$cluster))
 ```
 
-![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-4.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-36-3.png)
 
 ``` r
 qplot(personal_fitness, health_nutrition,  data=Social_Market, color=factor(cluster_all$cluster))
 ```
 
-![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-5.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-36-4.png)
 
 ``` r
 qplot(politics, travel, data=Social_Market, color=factor(cluster_all$cluster))
 ```
 
-![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-6.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-36-5.png)
 
 ``` r
 qplot(college_uni, online_gaming, data=Social_Market, color=factor(cluster_all$cluster))
 ```
 
-![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-34-7.png)
+![](STAT380_Part2_Ex1_Bhat_Cui_Ishita_Srikanth_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-36-6.png)
 
 After studying the various things that the twitter followers talk about, some interesting traits were discovered among the followers, revealed through the K-means clustering tequnique. For Cluster number 1, a higher values for fashion, beauty, shopping and cooking can be seen. This suggests that twitter users in this particular group maybe trendy millenials. Cluster 2 shows a more family oriented group of people who seem to care most about parenting, school, crafts, food, religion and family.cluster 3 explains the interests of a group of possibly young, outdoorsy people who are perhaps committed to a healthy lifestyle, discussing topics like personal fitness and health and nutrition.Cluster 4 indicates a group of educated people whose interests are evident in the high values for computers, news, politics and travel. Cluster 5 could be depicting college adults with interests in online gaming, sports and university related activities.Finally, cluster 6 clubs the remaining followers together in a general category, where no particular interest stands out.
 
